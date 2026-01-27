@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Event Case Study: PictureEast | Creative Connections Toolkit (UCL × TNBFC)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!--
+    =========================
+    QUICK-REPLACE VARIABLES
+    =========================
+    Replace values in :root to quickly adjust site-wide styling.
+  -->
+  <style>
+    :root{
+      /* Design variables (replace as needed) */
+      --primary-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* Primary font: Inter */
+      --secondary-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* Secondary font: Inter */
+      --base-font-size: 16px; /* Base font size: 16 */
+      --h1-size: 40px; /* H1 size: 40 */
+      --h2-size: 28px; /* H2 size: 28 */
+      --h3-size: 20px; /* H3 size: 20 */
+      --accent: #2563EB; /* Accent colour */
+      --max-width: 1100px; /* Max content width */
+      --card-radius: 12px; /* Card radius */
+      --shadow: 0 4px 12px rgba(0,0,0,0.08); /* Shadow */
+      --bg: #ffffff; /* Dark mode: No */
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --surface: #ffffff;
+      --nav-bg: #111827;
+      --hero-bg: #0f172a;
+      --hero-text: #ffffff;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ font-size: var(--base-font-size); }
+    body{
+      margin:0;
+      font-family: var(--primary-font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* Nav (consistent with your other pages) */
+    nav{
+      background: var(--nav-bg);
+      padding: 10px 24px;
+    }
+    nav a{
+      color:#e5e7eb;
+      text-decoration:none;
+      margin-right:16px;
+      font-size:0.95rem;
+    }
+    nav a:hover{ text-decoration:underline; }
+
+    /* Layout */
+    header.hero{
+      background: var(--hero-bg);
+      color: var(--hero-text);
+      padding: 52px 24px;
+    }
+    .wrap{
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    h1{ font-size: var(--h1-size); margin:0 0 10px 0; letter-spacing:-0.02em; }
+    h2{ font-size: var(--h2-size); margin:0 0 12px 0; letter-spacing:-0.01em; }
+    h3{ font-size: var(--h3-size); margin:0 0 10px 0; }
+    p{ margin: 0 0 12px 0; }
+    .subhead{ max-width: 900px; opacity: 0.92; margin-bottom: 14px; }
+    .meta{
+      font-size: 0.95rem;
+      opacity: 0.9;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+    .meta span{
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    main{
+      padding: 34px 0 72px;
+    }
+    section{
+      padding: 26px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-child{ border-bottom: 0; }
+
+    /* Cards / grids */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .card{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .stat{
+      display:flex;
+      flex-direction:column;
+      gap: 6px;
+    }
+    .stat .value{
+      font-size: 1.8rem;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+    .stat .label{
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Highlight / insight */
+    .highlight{
+      border-left: 5px solid var(--accent);
+      background: #f8fafc;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .highlight strong{ color: var(--text); }
+    .highlight p{ margin: 0; color: var(--muted); }
+
+    /* Simple charts */
+    .chart{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .bar{
+      display:grid;
+      grid-template-columns: 160px 1fr 60px;
+      align-items:center;
+      gap: 10px;
+    }
+    .bar .name{ color: var(--text); font-weight: 600; }
+    .track{
+      width: 100%;
+      background: #eef2ff;
+      border-radius: 999px;
+      height: 12px;
+      overflow:hidden;
+      border: 1px solid #dbeafe;
+    }
+    .fill{
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+    }
+    .pct{ text-align:right; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    /* Lists */
+    ul{ padding-left: 18px; margin: 10px 0 0 0; }
+    li{ margin: 6px 0; color: var(--muted); }
+
+    /* Gallery */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    figure{
+      margin:0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    figure img{
+      display:block;
+      width:100%;
+      height: 180px;
+      object-fit: cover;
+      background:#f3f4f6;
+    }
+    figcaption{
+      padding: 12px 14px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Resources */
+    .resource-list{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .resource{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+    .resource .left{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+    .resource .title{
+      font-weight: 650;
+    }
+    .resource .note{
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    a.link{
+      color: var(--accent);
+      text-decoration:none;
+      font-weight: 650;
+    }
+    a.link:hover{ text-decoration: underline; }
+
+    /* Footer CTA */
+    .cta{
+      display:flex;
+      flex-wrap: wrap;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px 16px;
+      padding: 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+    }
+    .cta h3{ margin:0; }
+    .btns{ display:flex; flex-wrap: wrap; gap: 10px; }
+    .btn{
+      display:inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 650;
+    }
+    .btn.primary{
+      border-color: var(--accent);
+      color: #fff;
+      background: var(--accent);
+    }
+    .btn:hover{ filter: brightness(0.98); }
+
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 22px 24px;
+      text-align:center;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    /* Accessibility */
+    :focus{
+      outline: 3px solid rgba(37,99,235,0.35);
+      outline-offset: 2px;
+    }
+
+    /* Mobile spacing tweaks */
+    @media (max-width: 520px){
+      .bar{ grid-template-columns: 1fr; }
+      .pct{ text-align:left; }
+      figure img{ height: 160px; }
+      header.hero{ padding: 44px 18px; }
+      .wrap{ padding: 0 18px; }
+      nav{ padding: 10px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Top navigation -->
+  <nav>
+    <a href="./index.html">Home</a>
+    <a href="./guidance.html">Guidance</a>
+    <a href="./case-studies.html">Case Studies</a>
+    <a href="./templates.html">Templates</a>
+    <a href="./reflections.html">Reflections</a>
+  </nav>
+
+  <!-- A. Hero Section -->
+  <header class="hero">
+    <div class="wrap">
+      <h1>Event Case Study: PictureEast Student Networking &amp; Panel Event</h1>
+      <p class="subhead">What we learned from our first cross-university student gathering</p>
+      <div class="meta" aria-label="Event metadata">
+        <span><strong>Date:</strong> 2026.2.21</span>
+        <span><strong>Location:</strong> UCL East Marshgate</span>
+        <span><strong>Audience size:</strong> Around 40</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <!-- B. Why this event -->
+      <section id="why">
+        <h2>B. Why this event</h2>
+        <p>
+          Creative industries are often informal and network-driven, which can make pathways difficult to access without
+          existing connections. Underrepresented students may face additional barriers in finding collaborators, learning
+          the unwritten rules of the industry, and approaching professional spaces with confidence.
+        </p>
+        <p>
+          This event was designed as a student-led, inclusive gathering to make pathways more visible and make networking
+          less intimidating — through structured introductions, a panel with industry voices, and dedicated time for
+          cross-university connection.
+        </p>
+      </section>
+
+      <!-- C. Who showed up -->
+      <section id="who">
+        <h2>C. Who showed up</h2>
+
+        <div class="grid" aria-label="Key participant statistics">
+          <div class="card stat">
+            <div class="value">72%</div>
+            <div class="label">Attendees aged <strong>18–23</strong></div>
+          </div>
+
+          <div class="card stat">
+            <div class="value">64%</div>
+            <div class="label">Reported they feel familiar with the creative industries</div>
+          </div>
+
+          <div class="card stat">
+            <div class="value">8</div>
+            <div class="label">Universities / colleges represented</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3>Universities represented (Survey)</h3>
+          <div class="grid" aria-label="Universities list" style="margin-top:10px;">
+            <div class="card" style="box-shadow:none;">Queen Mary</div>
+            <div class="card" style="box-shadow:none;">University of Kent</div>
+            <div class="card" style="box-shadow:none;">Kingston University</div>
+            <div class="card" style="box-shadow:none;">UCL</div>
+            <div class="card" style="box-shadow:none;">King’s College London</div>
+            <div class="card" style="box-shadow:none;">SOAS</div>
+            <div class="card" style="box-shadow:none;">Bermuda College</div>
+            <div class="card" style="box-shadow:none;">UEL</div>
+          </div>
+        </div>
+
+        <p style="margin-top:14px; color:var(--muted);">
+          <strong>This confirms the event reached its intended student audience across multiple universities.</strong>
+        </p>
+      </section>
+
+      <!-- D. What people came for -->
+      <section id="motivation">
+        <h2>D. What people came for</h2>
+
+        <div class="highlight" role="note" aria-label="Motivation highlight">
+          <p>
+            <strong>Top motivation:</strong> Finding collaborators.<br />
+            <strong>Who they want to meet:</strong> Attendees are open to meeting everyone, but showed particular interest in meeting
+            <strong>industry professionals</strong>.
+          </p>
+        </div>
+      </section>
+
+      <!-- E. Interests & roles -->
+      <section id="interests">
+        <h2>E. Interests &amp; roles</h2>
+        <p style="color:var(--muted); margin-bottom:8px;">
+          Creative role interests reported in the survey:
+        </p>
+
+        <!-- Bar chart (simple, accessible) -->
+        <div class="card">
+          <h3 style="margin-bottom:12px;">Role interests (Survey)</h3>
+          <div class="chart" aria-label="Role interests bar chart">
+            <div class="bar">
+              <div class="name">Cinematography</div>
+              <div class="track" aria-hidden="true"><div class="fill" style="width:22%;"></div></div>
+              <div class="pct">22%</div>
+            </div>
+
+            <div class="bar">
+              <div class="name">Directing</div>
+              <div class="track" aria-hidden="true"><div class="fill" style="width:18%;"></div></div>
+              <div class="pct">18%</div>
+            </div>
+
+            <div class="bar">
+              <div class="name">Screenwriting</div>
+              <div class="track" aria-hidden="true"><div class="fill" style="width:20%;"></div></div>
+              <div class="pct">20%</div>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:14px; color:var(--muted);">
+          <strong>Takeaway:</strong> Interests span both creative leadership and below-the-line roles, informing how future networking can be structured.
+        </p>
+      </section>
+
+      <!-- F. What this means -->
+      <section id="takeaways">
+        <h2>F. What this means</h2>
+        <div class="card">
+          <h3>Key takeaways</h3>
+          <ul>
+            <li>Cross-university demand exists for shared creative spaces where students can meet collaborators.</li>
+            <li>Students prioritise collaboration outcomes (finding people to work with) over passive inspiration.</li>
+            <li>Industry presence can increase confidence and clarity by making pathways feel more legible and attainable.</li>
+            <li>Survey signals can inform structured networking formats (e.g., role-based prompts and targeted introductions).</li>
+            <li>Evidence-based documentation strengthens repeatability for future cohorts and partner institutions.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- G. What’s next -->
+      <section id="next">
+        <h2>G. What’s next</h2>
+        <p>
+          <strong>Not a one-off event, but the starting point of an ongoing campaign.</strong>
+        </p>
+        <div class="card">
+          <h3>Planned follow-up</h3>
+          <ul>
+            <li>Post-event write-ups (reflective + informational versions)</li>
+            <li>Social media content cycle (highlights, quotes, aspirations board)</li>
+            <li>Follow-up message to attendees</li>
+            <li>Targeted outreach to film &amp; creative student societies</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- H. Gallery / Media -->
+      <section id="gallery">
+        <h2>H. Gallery / Media</h2>
+        <p style="color:var(--muted);">
+          Image placeholders below — replace each <code>src</code> and caption when media is available.
+        </p>
+
+        <div class="gallery" aria-label="Image gallery">
+          <figure>
+            <!-- REPLACE_IMAGE_1_SRC -->
+            <img src="REPLACE_IMAGE_1.jpg" alt="REPLACE_ALT_TEXT_1 (e.g., Registration desk and crowd arrival)" />
+            <figcaption><strong>IMAGE 1:</strong> Registration / crowd (REPLACE_CAPTION_1)</figcaption>
+          </figure>
+
+          <figure>
+            <!-- REPLACE_IMAGE_2_SRC -->
+            <img src="REPLACE_IMAGE_2.jpg" alt="REPLACE_ALT_TEXT_2 (e.g., Panel discussion in progress)" />
+            <figcaption><strong>IMAGE 2:</strong> Panel discussion (REPLACE_CAPTION_2)</figcaption>
+          </figure>
+
+          <figure>
+            <!-- REPLACE_IMAGE_3_SRC -->
+            <img src="REPLACE_IMAGE_3.jpg" alt="REPLACE_ALT_TEXT_3 (e.g., Networking and aspirations board activity)" />
+            <figcaption><strong>IMAGE 3:</strong> Networking / aspirations board (REPLACE_CAPTION_3)</figcaption>
+          </figure>
+
+          <figure>
+            <!-- REPLACE_IMAGE_4_SRC -->
+            <img src="REPLACE_IMAGE_4.jpg" alt="REPLACE_ALT_TEXT_4 (e.g., Filmmaker showcase moment)" />
+            <figcaption><strong>IMAGE 4:</strong> Filmmaker showcase (REPLACE_CAPTION_4)</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- I. Resources & Links -->
+      <section id="resources">
+        <h2>I. Resources &amp; Links</h2>
+
+        <div class="resource-list" aria-label="Resources list">
+          <div class="resource">
+            <div class="left">
+              <div class="title">Impact Report (PDF)</div>
+              <div class="note">Evidence and outcomes summary (replace link)</div>
+            </div>
+            <!-- REPLACE_IMPACT_REPORT_LINK -->
+            <a class="link" href="REPLACE_IMPACT_REPORT_URL" target="_blank" rel="noopener">Open →</a>
+          </div>
+
+          <div class="resource">
+            <div class="left">
+              <div class="title">Pitch Deck (PDF)</div>
+              <div class="note">Reusable deck for partners / universities (replace link)</div>
+            </div>
+            <!-- REPLACE_PITCH_DECK_LINK -->
+            <a class="link" href="REPLACE_PITCH_DECK_URL" target="_blank" rel="noopener">Open →</a>
+          </div>
+
+          <div class="resource">
+            <div class="left">
+              <div class="title">Event Page</div>
+              <div class="note">Public-facing event listing (replace link)</div>
+            </div>
+            <!-- REPLACE_EVENT_PAGE_LINK -->
+            <a class="link" href="REPLACE_EVENT_PAGE_URL" target="_blank" rel="noopener">Open →</a>
+          </div>
+
+          <div class="resource">
+            <div class="left">
+              <div class="title">Instagram</div>
+              <div class="note">Highlights and follow-up content (replace link)</div>
+            </div>
+            <!-- REPLACE_INSTAGRAM_LINK -->
+            <a class="link" href="REPLACE_INSTAGRAM_URL" target="_blank" rel="noopener">Open →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- J. Footer CTA -->
+      <section id="cta" style="border-bottom:0;">
+        <h2>J. Footer CTA</h2>
+
+        <div class="cta" role="region" aria-label="Call to action">
+          <div>
+            <h3 style="margin:0 0 6px 0;">Want to run something similar at your university?</h3>
+            <p style="margin:0; color:var(--muted);">Use the toolkit resources below to plan, adapt, and deliver a student-led event.</p>
+          </div>
+
+          <div class="btns">
+            <!-- REPLACE_TOOLKIT_TEMPLATES_LINK (suggest linking to templates.html or a specific template section) -->
+            <a class="btn primary" href="./templates.html">Use the Toolkit Templates</a>
+
+            <!-- REPLACE_CONTACT_LINK (email or a contact page you will create) -->
+            <a class="btn" href="REPLACE_CONTACT_URL">Contact the student organisers</a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    Creative Connections (UCL) × The New Black Film Collective · Educational Use Only
+  </footer>
+
+</body>
+</html>
