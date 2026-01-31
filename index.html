@@ -175,6 +175,40 @@
 .carousel-dot[aria-current="true"]{
   background: #2563eb;
 }
+    /* tap-to-play overlay (fix autoplay restrictions) */
+.tap-to-play{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 4;
+  cursor: pointer;
+  user-select: none;
+}
+.tap-to-play.hidden{
+  display: none;
+}
+/* tap-to-play overlay (fix autoplay restrictions) */
+.tap-to-play{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 4;
+  cursor: pointer;
+  user-select: none;
+}
+.tap-to-play.hidden{
+  display: none;
+}
 </style>
 </head>
 
@@ -209,8 +243,12 @@
   </section>
 <section class="video-block" aria-label="Toolkit intro videos">
   <div class="video-carousel">
-    <div class="carousel-shell">
-      <button class="carousel-btn prev" type="button" aria-label="Previous video">‹</button>
+  <div class="carousel-shell">
+  <button class="carousel-btn prev" type="button" aria-label="Previous video">‹</button>
+
+  <div class="tap-to-play" id="tapToPlay">Tap to play</div>
+
+  <div class="carousel-viewport">
 
       <div class="carousel-viewport">
         <div class="carousel-track" id="carouselTrack">
@@ -317,29 +355,55 @@
     const prevBtn = document.querySelector(".carousel-btn.prev");
     const nextBtn = document.querySelector(".carousel-btn.next");
     const dots = Array.from(document.querySelectorAll(".carousel-dot"));
+    const tapLayer = document.getElementById("tapToPlay");
 
     let index = 0;
+    let unlocked = false;
 
-    function updateCarousel(newIndex) {
-      index = (newIndex + slides.length) % slides.length; // wrap around
-      track.style.transform = `translateX(-${index * 100}%)`;
-
-      // update dots
-      dots.forEach((d, i) => {
-        d.setAttribute("aria-current", i === index ? "true" : "false");
-      });
-
-      // pause videos not visible (减少同时播放压力)
+    function pauseAllExcept(activeIndex) {
       slides.forEach((slide, i) => {
         const v = slide.querySelector("video");
         if (!v) return;
-        if (i === index) {
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-          v.currentTime = 0;
-        }
+        if (i === activeIndex) return;
+        v.pause();
+        v.currentTime = 0;
       });
+    }
+
+    function playActive() {
+      const v = slides[index].querySelector("video");
+      if (!v) return;
+
+      v.play().then(() => {
+        if (tapLayer) tapLayer.classList.add("hidden");
+      }).catch(() => {
+        if (tapLayer) tapLayer.classList.remove("hidden");
+      });
+    }
+
+    function updateDots() {
+      dots.forEach((d, i) => {
+        d.setAttribute("aria-current", i === index ? "true" : "false");
+      });
+    }
+
+    function updateCarousel(newIndex) {
+      index = (newIndex + slides.length) % slides.length;
+      track.style.transform = `translateX(-${index * 100}%)`;
+      updateDots();
+      pauseAllExcept(index);
+
+      if (unlocked) {
+        playActive();
+      } else {
+        if (tapLayer) tapLayer.classList.remove("hidden");
+      }
+    }
+
+    function unlockAndPlay() {
+      unlocked = true;
+      if (tapLayer) tapLayer.classList.add("hidden");
+      playActive();
     }
 
     prevBtn.addEventListener("click", () => updateCarousel(index - 1));
@@ -349,13 +413,22 @@
       dot.addEventListener("click", () => updateCarousel(i));
     });
 
-    // keyboard support: left/right arrows when focused anywhere on page
+    // first interaction unlocks autoplay
+    document.addEventListener("pointerdown", function once() {
+      unlockAndPlay();
+      document.removeEventListener("pointerdown", once);
+    });
+
+    // allow clicking the overlay itself
+    if (tapLayer) tapLayer.addEventListener("click", unlockAndPlay);
+
+    // keyboard support
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") updateCarousel(index - 1);
       if (e.key === "ArrowRight") updateCarousel(index + 1);
     });
 
-    // initial state
+    // initial
     updateCarousel(0);
   })();
 </script>
