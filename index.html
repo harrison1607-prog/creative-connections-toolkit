@@ -82,7 +82,100 @@
   font-size: 0.95rem;
   color: #4b5563;
 }
-  </style>
+  /* ===== Video Carousel ===== */
+.video-carousel {
+  max-width: 1100px;
+  margin: 18px auto 10px;
+}
+
+.carousel-shell{
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background: #0b1220;
+}
+
+/* viewport: only shows 1 slide */
+.carousel-viewport{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+/* track: slides laid out horizontally */
+.carousel-track{
+  display: flex;
+  height: 100%;
+  transform: translateX(0%);
+  transition: transform 420ms ease;
+}
+
+/* each slide takes full viewport width */
+.carousel-slide{
+  min-width: 100%;
+  height: 100%;
+}
+
+/* video fills each slide */
+.carousel-slide video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* left/right buttons */
+.carousel-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.55);
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+}
+
+.carousel-btn:hover{
+  background: rgba(15, 23, 42, 0.75);
+}
+
+.carousel-btn:focus{
+  outline: 3px solid rgba(37, 99, 235, 0.8);
+  outline-offset: 2px;
+}
+
+.carousel-btn.prev{ left: 12px; }
+.carousel-btn.next{ right: 12px; }
+
+/* optional: dots indicator */
+.carousel-dots{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.carousel-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  border: 0;
+  cursor: pointer;
+}
+
+.carousel-dot[aria-current="true"]{
+  background: #2563eb;
+}
+</style>
 </head>
 
 <body>
@@ -114,20 +207,41 @@
       across the creative industries.
     </p>
   </section>
-<section class="video-block" aria-label="Toolkit intro video">
-  <div class="video-frame">
-    <video
-      src="./assets/hero.mp4"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="metadata"
-      poster="./assets/hero-poster.jpg"
-    ></video>
+<section class="video-block" aria-label="Toolkit intro videos">
+  <div class="video-carousel">
+    <div class="carousel-shell">
+      <button class="carousel-btn prev" type="button" aria-label="Previous video">‹</button>
+
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <video src="./assets/toolkit-1.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          </div>
+          <div class="carousel-slide">
+            <video src="./assets/toolkit-2.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          </div>
+          <div class="carousel-slide">
+            <video src="./assets/toolkit-3.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          </div>
+          <div class="carousel-slide">
+            <video src="./assets/toolkit-4.mp4" autoplay muted loop playsinline preload="metadata"></video>
+          </div>
+        </div>
+      </div>
+
+      <button class="carousel-btn next" type="button" aria-label="Next video">›</button>
+    </div>
+
+    <div class="carousel-dots" aria-label="Video carousel pagination">
+      <button class="carousel-dot" type="button" aria-label="Go to video 1" aria-current="true"></button>
+      <button class="carousel-dot" type="button" aria-label="Go to video 2"></button>
+      <button class="carousel-dot" type="button" aria-label="Go to video 3"></button>
+      <button class="carousel-dot" type="button" aria-label="Go to video 4"></button>
+    </div>
   </div>
+
   <p class="video-caption">
-    Optional: a short, looping motion visual to contextualise the toolkit without promotional language.
+    Optional: short, looping motion visuals to contextualise the toolkit without promotional language.
   </p>
 </section>
 
@@ -196,5 +310,54 @@
   Creative Connections (UCL) × The New Black Film Collective · Educational Use Only
 </footer>
 
+<script>
+  (function () {
+    const track = document.getElementById("carouselTrack");
+    const slides = Array.from(track.querySelectorAll(".carousel-slide"));
+    const prevBtn = document.querySelector(".carousel-btn.prev");
+    const nextBtn = document.querySelector(".carousel-btn.next");
+    const dots = Array.from(document.querySelectorAll(".carousel-dot"));
+
+    let index = 0;
+
+    function updateCarousel(newIndex) {
+      index = (newIndex + slides.length) % slides.length; // wrap around
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      // update dots
+      dots.forEach((d, i) => {
+        d.setAttribute("aria-current", i === index ? "true" : "false");
+      });
+
+      // pause videos not visible (减少同时播放压力)
+      slides.forEach((slide, i) => {
+        const v = slide.querySelector("video");
+        if (!v) return;
+        if (i === index) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+          v.currentTime = 0;
+        }
+      });
+    }
+
+    prevBtn.addEventListener("click", () => updateCarousel(index - 1));
+    nextBtn.addEventListener("click", () => updateCarousel(index + 1));
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => updateCarousel(i));
+    });
+
+    // keyboard support: left/right arrows when focused anywhere on page
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") updateCarousel(index - 1);
+      if (e.key === "ArrowRight") updateCarousel(index + 1);
+    });
+
+    // initial state
+    updateCarousel(0);
+  })();
+</script>
 </body>
 </html>
