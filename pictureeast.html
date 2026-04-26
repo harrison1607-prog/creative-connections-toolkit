@@ -189,6 +189,103 @@
     /* Lists */
     ul{ padding-left: 18px; margin: 10px 0 0 0; }
     li{ margin: 6px 0; color: var(--muted); }
+    .tag-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .tag{
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .soft-note{
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .inline-metric{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .inline-metric .track{ flex:1; height: 10px; }
+    .inline-metric .pct{ min-width: 46px; }
+    .rank-list{
+      display:grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .rank-item{
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
+    }
+    .rank-item strong{
+      display:block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .rank-item.primary{
+      border-color: #bfdbfe;
+      background: #eff6ff;
+    }
+    .rank-kicker{
+      display:inline-block;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .learn-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .checklist{
+      list-style: none;
+      padding-left: 0;
+      margin-top: 12px;
+    }
+    .checklist li{
+      position: relative;
+      padding-left: 22px;
+      color: var(--muted);
+    }
+    .checklist li::before{
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+    .checklist-columns{
+      columns: 2;
+      column-gap: 24px;
+    }
+    .checklist-columns li{
+      break-inside: avoid;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
 
     /* Gallery */
     .gallery{
@@ -309,6 +406,7 @@
       header.hero{ padding: 44px 18px; }
       .wrap{ padding: 0 18px; }
       nav{ padding: 10px 18px; }
+      .checklist-columns{ columns: 1; }
     }
   </style>
 </head>
@@ -328,7 +426,7 @@
   <header class="hero">
     <div class="wrap">
       <h1>Event Case Study: PictureEast Student Networking &amp; Panel Event</h1>
-      <p class="subhead">What we learned from our first cross-university student gathering</p>
+      <p class="subhead">A starter case study for cross-university creative networking</p>
       <div class="meta" aria-label="Event metadata">
         <span><strong>Date:</strong> 2026.1.21</span>
         <span><strong>Location:</strong> UCL East Marshgate</span>
@@ -340,34 +438,73 @@
   <main>
     <div class="wrap">
 
-      <!-- B. Why this event -->
+      <!-- B. Why this event mattered -->
       <section id="why">
-        <h2>Why this event</h2>
-        <p>
-          Creative industries are often informal and network-driven, which can make pathways difficult to access without
-          existing connections. Underrepresented students may face additional barriers in finding collaborators, learning
-          the unwritten rules of the industry, and approaching professional spaces with confidence.
-        </p>
-        <p>
-          This event was designed as a student-led, inclusive gathering to make pathways more visible and make networking
-          less intimidating — through structured introductions, a panel with industry voices, and dedicated time for
-          cross-university connection.
-        </p>
+        <h2>Why this event mattered</h2>
+        <div class="card">
+          <p>
+            Creative industries often rely on informal networks, personal introductions, and knowledge that is not always
+            visible to students at the early stages of their careers. This can create additional access barriers, especially
+            for students from underrepresented backgrounds who may be trying to find collaborators, understand industry
+            pathways, or approach professional spaces with confidence.
+          </p>
+          <p>
+            This networking event was structured as a student-facing pilot for cross-university networking in film and the wider creative
+            industries. As a case study, its value lies less in showcasing a single event and more in showing why connection
+            itself needs to be treated as part of the event design, rather than as an informal extra.
+          </p>
+        </div>
       </section>
 
-      <!-- C. Who showed up -->
+      <!-- C. Design rationale -->
+      <section id="design-rationale">
+        <h2>Design rationale</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Why this format was used</h3>
+            <p>
+              The event combined a panel, Q&amp;A, and open networking. This sequence was chosen because networking can feel abrupt
+              when participants are asked to begin conversations without any shared context.
+            </p>
+            <p>
+              The panel helped reduce unfamiliarity by giving attendees a common starting point and making industry voices
+              visible from the outset. The Q&amp;A created shared topics that could carry into later conversations.
+            </p>
+          </div>
+          <div class="card">
+            <h3>What this suggests for future events</h3>
+            <p>
+              Networking after the panel felt less abrupt than asking students to immediately network with strangers. At the
+              same time, this event did not use a detailed facilitation system such as role tags, structured prompts, or
+              breakout groups.
+            </p>
+            <p>
+              For future events, this suggests that networking is more effective when it is framed and supported, rather than
+              left entirely informal. Future versions could make this support more explicit through role-based prompts, guided
+              introductions, or clearer participation cues.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- D. Evidence snapshot / who attended -->
       <section id="who">
-        <h2>Who showed up</h2>
+        <h2>Who attended and what this suggests</h2>
 
         <div class="grid" aria-label="Key participant statistics">
           <div class="card stat">
-            <div class="value">72%</div>
-            <div class="label">Attendees aged <strong>18–23</strong></div>
+            <div class="value">100+</div>
+            <div class="label">Total sign-ups</div>
           </div>
 
           <div class="card stat">
-            <div class="value">64%</div>
-            <div class="label">Reported they feel familiar with the creative industries</div>
+            <div class="value">40</div>
+            <div class="label">Attendees in person (around)</div>
+          </div>
+
+          <div class="card stat">
+            <div class="value">72%</div>
+            <div class="label">Attendees aged <strong>18–23</strong></div>
           </div>
 
           <div class="card stat">
@@ -377,106 +514,221 @@
         </div>
 
         <div class="card" style="margin-top:14px;">
-          <h3>Universities represented (Survey)</h3>
-          <div class="grid" aria-label="Universities list" style="margin-top:10px;">
-            <div class="card" style="box-shadow:none;">Queen Mary</div>
-            <div class="card" style="box-shadow:none;">University of Kent</div>
-            <div class="card" style="box-shadow:none;">Kingston University</div>
-            <div class="card" style="box-shadow:none;">UCL</div>
-            <div class="card" style="box-shadow:none;">King’s College London</div>
-            <div class="card" style="box-shadow:none;">SOAS</div>
-            <div class="card" style="box-shadow:none;">Bermuda College</div>
-            <div class="card" style="box-shadow:none;">UEL</div>
+          <h3>Institutions represented</h3>
+          <div class="tag-grid" aria-label="Universities list">
+            <div class="tag">UCL</div>
+            <div class="tag">King’s College London</div>
+            <div class="tag">Queen Mary University of London</div>
+            <div class="tag">Kingston University</div>
+            <div class="tag">SOAS</div>
+            <div class="tag">University of Kent</div>
+            <div class="tag">University of East London</div>
+            <div class="tag">Bermuda College</div>
+          </div>
+          <div class="soft-note">
+            Initial interest was strong, but in-person attendance was lower than registration. Future organisers should plan
+            reminders, confirmations, and light-touch post-registration engagement to improve attendance conversion.
+            <div class="inline-metric" aria-label="Attendance compared with sign-ups">
+              <div class="track" aria-hidden="true"><div class="fill" style="width:40%;"></div></div>
+              <div class="pct">~40%</div>
+            </div>
           </div>
         </div>
 
-        <p style="margin-top:14px; color:var(--muted);">
-          <strong>This confirms the event reached its intended student audience across multiple universities.</strong>
-        </p>
+        <div class="card" style="margin-top:14px;">
+          <h3>What this suggests</h3>
+          <ul>
+            <li>72% aged 18–23 indicates that the event reached its intended early-stage student audience.</li>
+            <li>Representation across eight institutions suggests demand for shared creative spaces beyond a single university.</li>
+            <li>100+ sign-ups but around 40 attendees shows strong initial interest, while also highlighting the need for better attendance conversion, reminders, and post-registration engagement.</li>
+          </ul>
+        </div>
       </section>
 
-      <!-- D. What people came for -->
+      <!-- E. What participants were looking for -->
       <section id="motivation">
-        <h2>What people came for</h2>
+        <h2>What participants were looking for</h2>
 
-        <div class="highlight" role="note" aria-label="Motivation highlight">
+        <div class="grid">
+          <div class="card">
+            <h3>Who participants wanted to meet</h3>
+            <p>
+              Most participants were open to meeting a range of people, rather than only one type of contact. The most common
+              specific preference was to meet industry professionals.
+            </p>
+            <p>
+              This suggests that future events should not treat networking only as industry access or only as student community
+              building. Both peer-to-peer connection and professional access matter.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Motivation hierarchy</h3>
+            <div class="rank-list" aria-label="Participant motivations ranked">
+              <div class="rank-item primary">
+                <span class="rank-kicker">Primary</span>
+                <strong>Finding collaborators</strong>
+                <span>The strongest motivation and the clearest sign that students were looking for practical connection.</span>
+              </div>
+              <div class="rank-item">
+                <span class="rank-kicker">Also important</span>
+                <strong>General networking</strong>
+                <span>A broad interest in meeting peers, building contacts, and extending creative community beyond one institution.</span>
+              </div>
+              <div class="rank-item">
+                <span class="rank-kicker">Moderate but meaningful</span>
+                <strong>Learning about industry pathways</strong>
+                <span>Professional insight still mattered, especially when linked to clearer next steps and visible routes into the sector.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight" role="note" aria-label="Motivation highlight" style="margin-top:14px;">
           <p>
-            <strong>Top motivation:</strong> Finding collaborators.<br />
-            <strong>Who they want to meet:</strong> Attendees are open to meeting everyone, but showed particular interest in meeting
-            <strong>industry professionals</strong>.
+            Participants were not only looking for passive inspiration. Many were looking for practical connections,
+            possible collaborators, and clearer routes into the creative industries.
           </p>
         </div>
       </section>
 
-      <!-- E. Interests & roles -->
+      <!-- F. Interests & roles -->
       <section id="interests">
-        <h2>Interests &amp; roles</h2>
+        <h2>Creative role interests</h2>
         <p style="color:var(--muted); margin-bottom:8px;">
           Creative role interests reported in the survey:
         </p>
 
-        <!-- Bar chart (simple, accessible) -->
         <div class="card">
-          <h3 style="margin-bottom:12px;">Role interests (Survey)</h3>
+          <h3 style="margin-bottom:12px;">Role interests</h3>
           <div class="chart" aria-label="Role interests bar chart">
             <div class="bar">
               <div class="name">Cinematography</div>
               <div class="track" aria-hidden="true"><div class="fill" style="width:22%;"></div></div>
               <div class="pct">22%</div>
             </div>
-
-            <div class="bar">
-              <div class="name">Directing</div>
-              <div class="track" aria-hidden="true"><div class="fill" style="width:18%;"></div></div>
-              <div class="pct">18%</div>
-            </div>
-
             <div class="bar">
               <div class="name">Screenwriting</div>
               <div class="track" aria-hidden="true"><div class="fill" style="width:20%;"></div></div>
               <div class="pct">20%</div>
             </div>
+            <div class="bar">
+              <div class="name">Directing</div>
+              <div class="track" aria-hidden="true"><div class="fill" style="width:18%;"></div></div>
+              <div class="pct">18%</div>
+            </div>
           </div>
         </div>
 
-        <p style="margin-top:14px; color:var(--muted);">
-          <strong>Takeaway:</strong> Interests span both creative leadership and below-the-line roles, informing how future networking can be structured.
-        </p>
+        <div class="card" style="margin-top:14px;">
+          <p>
+            Interests were not concentrated in one role. They spanned both creative leadership and practical production areas,
+            which suggests that future networking formats could benefit from role-based prompts, introductions, or activity
+            groups to help students find potential collaborators more easily.
+          </p>
+        </div>
       </section>
 
-      <!-- F. What this means -->
+      <!-- G. What we learned -->
       <section id="takeaways">
-        <h2>What this means</h2>
+        <h2>What we learned</h2>
+        <div class="learn-grid">
+          <div class="card">
+            <h3>1. Cross-university demand exists</h3>
+            <p>
+              Students attended from eight institutions. Interest clearly extended beyond a single university community.
+            </p>
+          </div>
+          <div class="card">
+            <h3>2. Students want practical connection</h3>
+            <p>
+              The strongest motivation was finding collaborators. Networking needs to support real introductions, not only inspiration.
+            </p>
+          </div>
+          <div class="card">
+            <h3>3. Industry presence helps</h3>
+            <p>
+              Industry speakers and Q&amp;A made pathways feel more concrete, especially for students without existing contacts.
+            </p>
+          </div>
+          <div class="card">
+            <h3>4. Networking needs time</h3>
+            <p>
+              Conversations became more active after the panel, but the networking window was still short.
+            </p>
+          </div>
+          <div class="card">
+            <h3>5. Evaluation needs to be easier</h3>
+            <p>
+              Useful survey data was collected, but the QR-code process could be easier and more visible.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- H. What we would improve next time -->
+      <section id="improvements">
+        <h2>What we would improve next time</h2>
         <div class="card">
-          <h3>Key takeaways</h3>
-          <ul>
-            <li>Cross-university demand exists for shared creative spaces where students can meet collaborators.</li>
-            <li>Students prioritise collaboration outcomes (finding people to work with) over passive inspiration.</li>
-            <li>Industry presence can increase confidence and clarity by making pathways feel more legible and attainable.</li>
-            <li>Survey signals can inform structured networking formats (e.g., role-based prompts and targeted introductions).</li>
-            <li>Evidence-based documentation strengthens repeatability for future cohorts and partner institutions.</li>
+          <p>
+            This event should be read as a learning record as well as a positive pilot. The next iteration would benefit from
+            a clearer support structure around both participation and follow-up.
+          </p>
+          <ul class="checklist">
+            <li>Extend the networking section so conversations are not rushed.</li>
+            <li>Prepare a clearer post-event social media and follow-up strategy.</li>
+            <li>Make the feedback process easier to access during the event.</li>
+            <li>Collect more detailed data on confidence, belonging, and follow-up connections.</li>
+            <li>Use role-based prompts to help students find potential collaborators more quickly.</li>
+            <li>Plan a clearer post-registration engagement strategy, especially given the gap between 100+ sign-ups and around 40 in-person attendees.</li>
           </ul>
         </div>
       </section>
 
-      <!-- G. What’s next -->
+      <!-- I. Reusable guidance -->
+      <section id="guidance">
+        <h2>Reusable guidance for future organisers</h2>
+        <div class="card">
+          <h3>Checklist for planning a similar event</h3>
+          <ul class="checklist checklist-columns">
+            <li>Give students from different institutions a clear reason to gather.</li>
+            <li>Include industry voices that help make pathways more visible.</li>
+            <li>Protect enough time for peer-to-peer connection.</li>
+            <li>Use simple data collection to understand who attended and what they needed.</li>
+            <li>Plan post-event follow-up that keeps the network active.</li>
+            <li>Document the process so learning becomes reusable resources.</li>
+            <li>Consider optional role-based prompts or guided introductions to reduce the pressure of informal networking.</li>
+          </ul>
+          <p style="margin-top:14px; color:var(--muted);">
+            This case study should be read as a starting point, not a fixed model. Future organisers can adapt the format
+            depending on audience size, partner institutions, available speakers, and the needs of the student community.
+          </p>
+        </div>
+      </section>
+
+      <!-- J. What’s next -->
       <section id="next">
         <h2>What’s next</h2>
-        <p>
-          <strong>Not a one-off event, but the starting point of an ongoing campaign.</strong>
-        </p>
         <div class="card">
+          <p>
+            This type of event should not remain a one-off. The next stage is to use this case study, participant data, and
+            organiser reflections to inform future Creative Connections networking events and strengthen a repeatable approach.
+          </p>
           <h3>Planned follow-up</h3>
           <ul>
-            <li>Post-event write-ups (reflective + informational versions)</li>
-            <li>Social media content cycle (highlights, quotes, aspirations board)</li>
-            <li>Follow-up message to attendees</li>
-            <li>Targeted outreach to film &amp; creative student societies</li>
+            <li>Post-event write-ups for students and partners.</li>
+            <li>A social media content cycle using highlights, quotes, and participant aspirations.</li>
+            <li>Follow-up messages to attendees.</li>
+            <li>Targeted outreach to film and creative student societies.</li>
+            <li>Development of templates and checklists for future organisers.</li>
           </ul>
+          <p style="margin-top:14px;">
+            <strong>Long-term aim:</strong> to support a sustainable cross-university creative network that increases access,
+            confidence, and collaboration for students entering the creative industries.
+          </p>
         </div>
       </section>
 
-      <!-- H. Gallery / Media -->
+      <!-- K. Gallery / Media -->
       <section id="gallery">
         <h2>Gallery / Media</h2>
         <p style="color:var(--muted);">
@@ -524,7 +776,7 @@ Filmmaker showcase moment.
         </div>
       </section>
 
-      <!-- I. Resources & Links -->
+      <!-- L. Resources & Links -->
       <section id="resources">
         <h2>Resources &amp; Links</h2>
 
@@ -558,7 +810,7 @@ Filmmaker showcase moment.
         </div>
       </section>
 
-      <!-- J. Footer CTA -->
+      <!-- M. Footer CTA -->
       <section id="cta" style="border-bottom:0;">
         <h2>Footer CTA</h2>
 
